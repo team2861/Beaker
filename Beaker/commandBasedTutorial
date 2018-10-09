@@ -19,7 +19,7 @@
 	
 	import edu.wpi.first.wpilibj.*;
 	import edu.wpi.first.wpilibj.command.Subsystem;
-	import org.usfirst.frc.team1.robot.RobotMap;
+	import org.usfirst.frc.team2861.robot.RobotMap;
 
 	public class Claw extends Subsystem {
 
