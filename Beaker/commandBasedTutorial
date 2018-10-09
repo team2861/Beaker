@@ -7,7 +7,39 @@
 
 02	//** SUBSYSTEMS **//
 	Next, create your subsystems.  In this project, we have our Drive Train, a "Winch" comprised
-	of our AUX motor/encoder, 
+	of our AUX motor/encoder, and some servos.  When a subsystem is created, we need to include 
+	all methods associated with this subsystem.  The following example is provided by WPILib. The
+	clas mechanism has a single motor to open or close the claw and no sensors (not necessarily a
+	good idea in practice, but works for the example).  The idea is that the open and close
+	operations are simply timed. There are three methods, open(), close(), and stop() that 
+	operate the claw motor.  Notice that there is not specific code that actually checks if the
+	claw is opened or closed. The open method gets the claw moving in the open direction and the
+	close method gets the claw moving in the close direction. Use a command to control the timing
+	of this operation to make sure that the claw opens and closes for a specific period of time.
+	
+	import edu.wpi.first.wpilibj.*;
+	import edu.wpi.first.wpilibj.command.Subsystem;
+	import org.usfirst.frc.team1.robot.RobotMap;
+
+	public class Claw extends Subsystem {
+
+		Victor motor = RobotMap.clawMotor;
+
+    	    public void initDefaultCommand() {
+    	    }
+
+    	    public void open() {
+    		motor.set(1);
+    	    }
+
+    	    public void close() {
+    		motor.set(-1);
+    	    }
+
+    	    public void stop() {
+    		motor.set(0);
+    	    }
+	}
 	
 03  //** COMMANDS **//
 	What you will do next is create the commands.  Elijah is cool.
