@@ -1,0 +1,16 @@
+01 	//** ROBOTMAP **//
+	Start with RobotMap.java.  Here you will map the ports that all of your electronics are plugged
+	in to.  This will include motor controllers, sensors, and joysticks.  You will then create the
+	objects for your motor controllers, sensors, drive, etc.  Don't forget to import all of the
+	required libraries to be able to use the classes.  //** We may want to put constants here.
+	**//
+
+02	//** SUBSYSTEMS **//
+	Next, create your subsystems.  In this project, we have our Drive Train, a "Winch" comprised
+	of our AUX motor/encoder, 
+	
+03  //** COMMANDS **//
+
+04  //** OI **//
+
+05  //** ROBOT **//
