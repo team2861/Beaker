@@ -1,3 +1,4 @@
+/** Written by croadfeldt
 This is a complete eclipse project of wpilib java for the FRC 2017 season. This includes 
 a subsystem that reads data from a Pixy camera over SPI.
 
