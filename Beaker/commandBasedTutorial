@@ -4,6 +4,16 @@
 	objects for your motor controllers, sensors, drive, etc.  Don't forget to import all of the
 	required libraries to be able to use the classes.  //** We may want to put constants here.
 	**//
+	
+	import edu.wpi.first.wpilibj.Talon;
+	
+	public class RobotMap{
+	
+		public static final int auxMotorController = 2;
+		
+		public static Talon auxMotor = new Talon(auxMotorController);
+	}
+	
 
 02	//** SUBSYSTEMS **//
 	Next, create your subsystems.  In this project, we have our Drive Train, a "Winch" comprised
@@ -21,29 +31,173 @@
 	import edu.wpi.first.wpilibj.command.Subsystem;
 	import org.usfirst.frc.team2861.robot.RobotMap;
 
-	public class Claw extends Subsystem {
+	public class Winch extends Subsystem {
 
-		Victor motor = RobotMap.clawMotor;
+		Talon winch = RobotMap.auxMotor;
 
     	    public void initDefaultCommand() {
     	    }
 
-    	    public void open() {
-    		motor.set(1);
+    	    public void up() {
+    		winch.set(1);
     	    }
 
-    	    public void close() {
-    		motor.set(-1);
+    	    public void down() {
+    		winch.set(-1);
     	    }
 
     	    public void stop() {
-    		motor.set(0);
+    		winch.set(0);
     	    }
 	}
 	
 03  //** COMMANDS **//
-	What you will do next is create the commands.  Elijah is cool.
+	What you will do next is create the commands.  Commands provide the timing of the subsystems
+	operations.  Each command would do a different operation with the subsystem, the Claw in this
+	case.  The commands prvides the timing for opening or closing.  Here is the WPILib example of a
+	simple Command the controls the opening of the claw. Notice that a timeout is set for the time in
+	the isFinished() method.
+	
+	package org.usfirst.frc.team1.robot.commands;
+
+	import edu.wpi.first.wpilibj.command.Command;
+	import org.usfirst.frc.team2861.robot.Robot;
+	
+	public class OpenClaw extends Command {
+
+		/* 
+		 *	Constructor - Might have parameters for this command such as target positions of
+		 *	devices. Should also set the name of the command for debugging purposes. This will
+		 *	be used if the status is viewed in the dashboard. The command should require 
+		 *	(reserve) any devices it might use.
+		 */
+    	    public ExtendWinch() {
+	    	super("OpenClaw");
+        	requires(Robot.winch);
+        	setTimeout(.9);
+    	    }
+
+		/*
+		 *	Initialize() - This method sets up the command and is called immediately before the
+		 *	command is executed for the first time and every subsequent time it is started.
+		 */
+    	    protected void initialize() {
+    		Robot.winch.up()
+   	    }
+	    
+	    	/*
+		 *	Execute() - This method is called periodically (about every 20ms) and does the work
+		 *	of the command. Sometimes, if there is a position, a subsystem is moving to, the 
+		 *	command might set the target position for the subsystem in initialize() and have an
+		 *	empty execute() method.
+		 */
+
+    	    protected void execute() {
+    	    }
+	    
+	    	/*
+		 *	Make this return true when this Command no longer needs to run execute()
+		 */
+
+    	    protected boolean isFinished() {
+        	return isTimedOut();
+    	    }
+
+    	    protected void end() {
+    		Robot.winch.stop();
+    	    }
+
+    	    protected void interrupted() {
+    		end();
+    	    }
+	}
+
 
 04  //** OI **//
+	Your OI is used to run commands when joystick buttons are pressed, released, or 
+	continuously while the button is held down.  You first need to create the Joystick
+	object and JoystickButton objects as demonstrated by WPILib:
+	
+	public class OI {
+    	    // Create the joystick and the 8 buttons on it
+		Joystick leftJoy = new Joystick(1);
+		Button button1 = new JoystickButton(leftJoy, 1),
+				button2 = new JoystickButton(leftJoy, 2),
+				button3 = new JoystickButton(leftJoy, 3),
+				button4 = new JoystickButton(leftJoy, 4),
+				button5 = new JoystickButton(leftJoy, 5),
+				button6 = new JoystickButton(leftJoy, 6),
+				button7 = new JoystickButton(leftJoy, 7),
+				button8 = new JoystickButton(leftJoy, 8);
+	
+	}
+	
+	You then need to associate the buttons with commands as demonstrated by WPILib:
+	
+	public OI() {
+		button1.whenPressed(new PrepareToGrab());
+		button2.whenPressed(new Grab());
+		button3.whenPressed(new DriveToDistance(0.11));
+		button4.whenPressed(new PlaceSoda());
+		button6.whenPressed(new DriveToDistance(0.2));
+		button8.whenPressed(new Stow());
+		
+		button7.whenPressed(new SodaDelivery());
+	}
+	
+	In this example most of the joystick buttons from the previous code fragment are
+	associated with commands.  When the associated button is pressed, the command is run.
+	This is an excellent way to create a telop program that has buttons to do particular
+	actions.  In addition to the "whenPressed()" condition, there are a few other 
+	conditions you can use to link buttons to commands:
+	-Commands can run when a button is released by using:
+	 whenReleased() insead of whenPressed()
+	-Commands can run continuously while the button is depressed by calling:
+	 whileHeld()
+	-Commands can be toggled when a button is pressed using:
+	 toggleWhenPressed()
+	-A command can be canceled when a button is pressed using:
+	 cancelWhenPressed()
 
 05  //** ROBOT **//
+	This is where we create our autonomous code from the different commands in our program.
+	From OI, we have: button7.whenPressed(new SodaDelivery());
+	We can use the SodaDelivery() method as an autonomous routine as follows:
+	
+	public class Robot extends IterativeRobot {
+
+    	    Command autonomousCommand;
+
+    	    /**
+     	     * This function is run when the robot is first started up and should be
+     	     * used for any initialization code.
+     	     */
+    	    public void robotInit() {
+			oi = new OI();
+        	// instantiate the command used for the autonomous period
+        	autonomousCommand = new SodaDelivery();
+    	    }
+
+   	    public void autonomousInit() {
+        	// schedule the autonomous command (example)
+        	if (autonomousCommand != null) autonomousCommand.start();
+    	    }
+
+    	    /**
+     	     * This function is called periodically during autonomous
+	     */     
+	    public void autonomousPeriodic() {
+        	Scheduler.getInstance().run();
+    	    }
+	    
+	To get the SodaDelivery command to run as the Autonomous program,
+	1.  Instantiate it in the RobotInit() method. RobotInit() is called only
+	    once when the robot starts so it is a good time to create the command
+	    instance.
+	2.  Start it during AutonomousInit() method. AutonomousInit() is called
+	    once at the start of the autonomous period so we schedule the command 
+	    there.
+	3.  Be sure the scheduler is called repeatedly during the AutonomousPeriodic()
+	    method.  AutonomousPeriodic() is called (nominally) every 20ms so that is a
+	    good time to run the scheduler which makes a pass through all the currently
+	    scheduled commands.
