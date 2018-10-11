@@ -113,7 +113,12 @@
 	}
 
 
-04  //** OI **//
+04  //** COMMAND GROUPS **//
+
+
+
+
+05  //** OI **//
 	Your OI is used to run commands when joystick buttons are pressed, released, or 
 	continuously while the button is held down.  You first need to create the Joystick
 	object and JoystickButton objects as demonstrated by WPILib:
@@ -159,7 +164,7 @@
 	-A command can be canceled when a button is pressed using:
 	 cancelWhenPressed()
 
-05  //** ROBOT **//
+06  //** ROBOT **//
 	This is where we create our autonomous code from the different commands in our program.
 	From OI, we have: button7.whenPressed(new SodaDelivery());
 	We can use the SodaDelivery() method as an autonomous routine as follows:
