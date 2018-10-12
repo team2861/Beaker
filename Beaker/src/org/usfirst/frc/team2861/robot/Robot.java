@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2861.robot.subsystems.Vision;
 
 import org.usfirst.frc.team2861.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2861.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2861.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -29,6 +30,8 @@ import org.usfirst.frc.team2861.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
 	public static Vision vision;
 	public static OI oi;
+	
+	DriveTrain kDriveTrain;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -116,6 +119,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		vision.testPixy1();
+		kDriveTrain.DriveWithJoysticks();
 	}
 
 	/**
