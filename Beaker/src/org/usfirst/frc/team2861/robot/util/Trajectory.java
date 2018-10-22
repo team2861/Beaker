@@ -1,15 +1,10 @@
-package org.usfirst.frc.team2861.robot.subsystems;
-
-
+package org.usfirst.frc.team2861.robot.util;
 /**
  *	The Trajectory object contains an array of Segments that represent the location,
  *	velocity, acceleration, jerk and heading of a particular point in the trajectory.
  *	Trajectories can be generated with the Pathfinder class.
  */
-
-
 public class Trajectory {
-
 	/**
      * The Trajectory Configuration outlines the rules to follow while generating the trajectory. This includes
      * the method used for 'fitting' the spline, the amount of samples to use, the time difference and maximum values
@@ -116,6 +111,4 @@ public class Trajectory {
         }
         return toCopy;
     }
-
 }
-

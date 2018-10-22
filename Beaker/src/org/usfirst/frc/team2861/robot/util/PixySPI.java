@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2861.robot.subsystems;
+package org.usfirst.frc.team2861.robot.util;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.SPI;
@@ -13,12 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/**
- *
- */
 public class PixySPI {
-
 	PixyPacket values = null;
 	SPI pixy = null;
 	Port port = null;
@@ -27,14 +22,14 @@ public class PixySPI {
 	String print;
 
 	// Variables used for pixy comms, derived from https://github.com/omwah/pixy_rpi
-	static final byte PIXY_SYNC_BYTE = 0x5a;
-	static final byte PIXY_SYNC_BYTE_DATA = 0x5b;
-	static final int PIXY_OUTBUF_SIZE = 6;
-	static final int PIXY_MAXIMUM_ARRAYSIZE = 130;
-	static final int PIXY_START_WORD = 0xaa55;
-	static final int PIXY_START_WORDX = 0x55aa;
-	static final int BLOCK_LEN = 5;
-	static final int PIXY_SIG_COUNT = 7;
+	public static final byte PIXY_SYNC_BYTE = 0x5a;
+	public static final byte PIXY_SYNC_BYTE_DATA = 0x5b;
+	public static final int PIXY_OUTBUF_SIZE = 6;
+	public static final int PIXY_MAXIMUM_ARRAYSIZE = 130;
+	public static final int PIXY_START_WORD = 0xaa55;
+	public static final int PIXY_START_WORDX = 0x55aa;
+	public static final int BLOCK_LEN = 5;
+	public static final int PIXY_SIG_COUNT = 7;
 	private ArrayDeque<Byte> outBuf = new ArrayDeque<>(); // Future use for sending commands to Pixy.
 	private ArrayList<int[]> blocks = new ArrayList<int[]>();
 	private boolean skipStart = false;
@@ -358,4 +353,3 @@ public class PixySPI {
 		return new String(bytesToHex(b));
 	}
 }
-

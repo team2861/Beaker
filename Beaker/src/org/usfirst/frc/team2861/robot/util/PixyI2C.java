@@ -1,15 +1,11 @@
-package org.usfirst.frc.team2861.robot.subsystems;
+package org.usfirst.frc.team2861.robot.util;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class PixyI2C {
-
 	PixyPacket values;
 	I2C pixy;
 	Port port = Port.kOnboard;
@@ -106,6 +102,4 @@ public class PixyI2C {
 	public int getArea(){
 		return getWidth() * getHeight();
 	}
-	
 }
-
