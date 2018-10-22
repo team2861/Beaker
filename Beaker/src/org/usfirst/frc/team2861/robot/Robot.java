@@ -14,11 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team2861.robot.subsystems.Vision;
+import org.usfirst.frc.team2861.robot.subsystems.DriveTrain_Subsystem;
+import org.usfirst.frc.team2861.robot.subsystems.Vision_Subsystem;
+import org.usfirst.frc.team2861.robot.subsystems.Winch_Subsystem;
 
-import org.usfirst.frc.team2861.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2861.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2861.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,10 +27,12 @@ import org.usfirst.frc.team2861.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static Vision vision;
+	public static Vision_Subsystem vision;
+	public static DriveTrain_Subsystem kDriveTrain;
+	public static Winch_Subsystem Winch;
 	public static OI oi;
 	
-	DriveTrain kDriveTrain;
+
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -42,11 +43,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		vision = new Vision();
+		vision = new Vision_Subsystem();
+		kDriveTrain = new DriveTrain_Subsystem();
 		oi = new OI();
 		
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		vision.testPixy1();
-		kDriveTrain.DriveWithJoysticks();
+		
 	}
 
 	/**
