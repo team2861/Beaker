@@ -1,4 +1,5 @@
 /** Written by croadfeldt
+Project at: https://github.com/croadfeldt/wpilib_pixy_spi_java.git
 This is a complete eclipse project of wpilib java for the FRC 2017 season. This includes 
 a subsystem that reads data from a Pixy camera over SPI.
 
